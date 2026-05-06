@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>神秘塔罗 · Mystic Tarot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;900&family=Orbitron:wght@400;600;900&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#04040d;--panel:rgba(10,6,28,.82);--border:rgba(0,200,255,.16);
+  --gold:#f0c040;--gold2:#ffe680;--cyan:#00d4ff;--violet:#b06aff;
+  --pink:#ff2d78;--green:#00ffb3;--text:#ccc5f0;--dim:#5a5280;
+  --gGold:0 0 10px rgba(240,192,64,.7),0 0 28px rgba(240,192,64,.25);
+  --gCyan:0 0 10px rgba(0,212,255,.6),0 0 26px rgba(0,212,255,.2);
+  --gViolet:0 0 10px rgba(176,106,255,.6),0 0 24px rgba(176,106,255,.2);
+  --gPink:0 0 10px rgba(255,45,120,.6),0 0 24px rgba(255,45,120,.2);
+  --cw:148px;--ch:222px;
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;min-height:100vh;overflow-x:hidden}
+#cvs{position:fixed;inset:0;z-index:-1;pointer-events:none}
+.glass{background:var(--panel);backdrop-filter:blur(18px) saturate(1.35);-webkit-backdrop-filter:blur(18px) saturate(1.35);border:1px solid var(--border);border-radius:12px}
+header,.page{position:relative;z-index:1}
+header{padding:0 clamp(14px,4vw,52px)}
+.hline{height:1px;background:linear-gradient(90deg,transparent,var(--cyan) 30%,var(--gold) 50%,var(--cyan) 70%,transparent);animation:hlineAnim 6s linear infinite}
+@keyframes hlineAnim{0%,100%{opacity:.4}50%{opacity:1;filter:brightness(1.5)}}
+.hinner{display:flex;align-items:center;justify-content:space-between;padding:16px 0 14px}
+.titGroup{display:flex;flex-direction:column;gap:3px}
+.titSub{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:4px;color:var(--cyan);text-shadow:var(--gCyan);animation:dimP 3s ease-in-out infinite}
+.titMain{font-family:'Cinzel Decorative',serif;font-size:clamp(18px,3.6vw,38px);font-weight:900;letter-spacing:6px;background:linear-gradient(120deg,var(--gold) 0%,var(--gold2) 35%,var(--gold) 60%,var(--violet) 100%);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 14px rgba(240,192,64,.45));animation:shimmer 7s linear infinite}
+.titEn{font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;color:var(--dim)}
+@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes dimP{0%,100%{opacity:.5}50%{opacity:1}}
+.btnArchive{display:flex;align-items:center;gap:7px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.35);border-radius:8px;color:var(--cyan);font-family:'Orbitron',monospace;font-size:10px;letter-spacing:2px;padding:8px 16px;cursor:pointer;transition:all .3s}
+.btnArchive:hover{background:rgba(0,212,255,.12);box-shadow:var(--gCyan);transform:translateY(-1px)}
+.archIco{display:inline-block;animation:spinSlow 8s linear infinite}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.page{max-width:1100px;margin:0 auto;padding:0 clamp(14px,4vw,52px) 100px}
+.qLabel{font-family:'Orbitron',monospace;font-size:9px;letter-spacing:3px;color:var(--cyan);margin-bottom:10px}
+.querySection{margin:20px 0 32px}
+.qInput{width:100%;background:rgba(0,6,20,.65);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:15px;line-height:1.8;padding:13px 18px;resize:none;outline:none;transition:border-color .3s,box-shadow .3s;position:relative;display:block}
+.qInput::placeholder{color:var(--dim);font-size:13px}
+.qInput:focus{border-color:var(--cyan);box-shadow:var(--gCyan)}
+.qCounter{font-family:'Orbitron',monospace;font-size:8px;color:var(--dim);text-align:right;margin-top:4px;letter-spacing:1px}
+.stage{perspective:1200px;perspective-origin:50% 38%;margin-bottom:36px}
+.spread{display:flex;align-items:flex-end;justify-content:center;gap:clamp(8px,2.5vw,36px);transform:rotateX(10deg);transform-style:preserve-3d;padding:24px 0 10px;flex-wrap:wrap}
+.slotUnit{display:flex;flex-direction:column;align-items:center;gap:7px}
+.slotLabel{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--gold);text-shadow:var(--gGold)}
+.slotSub{font-family:'Cinzel',serif;font-size:8px;letter-spacing:4px;color:var(--dim)}
+.cardSlot{width:var(--cw);height:var(--ch);position:relative;border:1.5px dashed rgba(0,200,255,.28);border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(0,4,18,.55);transition:border-color .4s,box-shadow .4s;overflow:hidden}
+.cardSlot.filled{border-color:rgba(240,192,64,.5);box-shadow:0 0 24px rgba(240,192,64,.14)}
+.slotPH{display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.3}
+.slotPHIcon{font-si
